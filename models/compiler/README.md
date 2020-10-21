@@ -5,7 +5,7 @@ Find out more about the compiler [HERE](https://github.com/tum-ei-eda/tflite_mic
 The following commands were used to generate the compiler models:
 
 ```
-compiler other/MNIST_full_quanitization.tflite compiler/offline_model.cc hello_world_
+compiler other/MNIST_full_quanitization.tflite compiler/offline_model.cc mnist_
 mv compiler/offline_model.cc.h compiler/offline_model.h
 ```
 
