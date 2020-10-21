@@ -220,7 +220,7 @@ static void TouchScreen_Calibration_WaitForPressedState(uint8_t Pressed) {
             HAL_Delay(10);
           } /* of if(status == TS_OK) */
         }
-        while (!exitSecondLevelWhileLoopReq) {}
+        while (!exitSecondLevelWhileLoopReq);
       } /* of if (((Pressed == 0) && .... */
     } /* of if(status == TS_OK) */
 
@@ -236,7 +236,7 @@ static void TouchScreen_Calibration_WaitForPressedState(uint8_t Pressed) {
       exitSecondLevelWhileLoopReq = 1;
     }
   }
-  while (!exitSecondLevelWhileLoopReq) {}
+  while (!exitSecondLevelWhileLoopReq);
 }
 
 /**
