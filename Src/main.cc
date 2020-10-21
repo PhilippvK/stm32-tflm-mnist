@@ -23,11 +23,7 @@
 
 
 /* TFLM Includes -------------------------------------------------------------*/
-#ifndef ENABLE_TESTS
 #include "main_functions.h"
-#else
-#include "test_micro_speech.h"
-#endif /* ENABLE_TESTS */
 
 /* Private includes ----------------------------------------------------------*/
 #include <string.h>
@@ -139,7 +135,7 @@ int main(void) {
 
 
 /**
-  * @brief System Clock Configuration
+  * @brief TODO
   * @retval uint8_t (1 when button clicked)
   *
   */
