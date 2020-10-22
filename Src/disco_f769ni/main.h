@@ -35,8 +35,7 @@ extern "C" {
 #include "stm32f769i_discovery.h"
 #include "stm32f769i_discovery_lcd.h"
 #include "stm32f769i_discovery_ts.h"
-#include "stm32f769i_discovery_audio.h"
-#include "stm32f769i_discovery_sd.h"
+#include "stm32f769i_discovery_sd.h"  // TODO(PhilippvK): Only with FAKE_TOUCH
 
 /* Touchscreen Includes */
 #include "ts_calibration.h"
@@ -52,15 +51,17 @@ extern "C" {
 
 // TODO(PhilippvK): Comment
 #include "misc.h"
+#include "bsp.h"
+
 
 /* Exported types ------------------------------------------------------------*/
 
 /* Exported constants --------------------------------------------------------*/
+#define MX_UART_Init MX_USART1_UART_Init
 
 /* Exported macro ------------------------------------------------------------*/
 // 8888 - 24 bit
 #define GS2RGB(x) (uint32_t)((0xff << 24)|(x << 16)|(x << 8)|x)
-#define MX_UART_Init MX_USART1_UART_Init
 
 /* Exported functions prototypes ---------------------------------------------*/
 int __io_putchar(int ch);

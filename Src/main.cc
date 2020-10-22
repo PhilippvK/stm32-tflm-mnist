@@ -49,7 +49,6 @@ uint8_t* data;
 #endif /* FAKE_TOUCH */
 
 /* Private function prototypes -----------------------------------------------*/
-static void BSP_Init(void);
 static void BSP_Welcome(void);
 #ifdef FAKE_TOUCH
 void displayFileName(char* name);
@@ -107,7 +106,7 @@ int main(void) {
   fprintf(stderr, "Setup done! Main loop starts now!\n\r");
   while (true) {
 #ifdef FAKE_TOUCH
-    if (!data) {
+    if (data) {
       free(data);
     }
     data = get_data(TFLM_EXAMPLE, filenames[file_index],
@@ -148,45 +147,11 @@ uint8_t CheckForUserInput(void) {
 }
 
 /**
-  * @brief Board Support Package Initialization
-  * @retval None
-  *
-  */
-static void BSP_Init(void) {
-  /* Configure LEDs */
-  BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_RED);
-  BSP_LED_On(LED_GREEN);
-
-  /* Configure Button */
-  BSP_PB_Init(BUTTON_WAKEUP, BUTTON_MODE_GPIO);
-  /* Configure LCD */
-  /* Initialize the LCD */
-  uint8_t  lcd_status = LCD_OK;
-  lcd_status = BSP_LCD_Init();
-  while (lcd_status != LCD_OK) {}
-#ifdef STM32_BOARD_STM32F769I_DISCOVERY
-  BSP_LCD_LayerDefaultInit(0, LCD_FB_START_ADDRESS);
-#endif /* STM32_BOARD_STM32F769I_DISCOVERY */
-  BSP_LCD_Clear(LCD_COLOR_WHITE);
-
-  /* Configure Touchscreen (optional) */
-  // Touchscreen_Calibration();
-  BSP_TS_Init(BSP_LCD_GetXSize(), BSP_LCD_GetYSize());
-
-  /* Set Default LCD Colors and Fonts */
-  BSP_LCD_Clear(LCD_COLOR_WHITE);
-  BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
-  BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
-  BSP_LCD_SetFont(&Font12);
-}
-
-/**
   * @brief Show Welcome Message on LCD
   * @retval None
   *
   */
-static void BSP_Welcome() {
+void BSP_Welcome() {
   /* Local Variables */
   const uint16_t delay_ms = 1000;
 
@@ -228,13 +193,14 @@ static void BSP_Welcome() {
   BSP_LCD_SetFont(old_font);
 }
 
+
 #ifdef FAKE_TOUCH
 void displayFileName(char* name) {
   char str[64];
   BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
   BSP_LCD_SetBackColor(LCD_COLOR_WHITE);
   sprintf(str, "<%s>", name);  // TODO(PhilippvK): snprintf
-  BSP_LCD_DisplayStringAt(0, 256-50, (uint8_t *)str, CENTER_MODE);
+  BSP_LCD_DisplayStringAt(0, 9*BSP_LCD_GetYSize()/10, (uint8_t *)str, CENTER_MODE);
 }
 #endif /* FAKE_TOUCH*/
 

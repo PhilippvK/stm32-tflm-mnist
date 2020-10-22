@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : audio.h
-  * @brief          : Header for audio.c file.
-  *                   This file contains the exported function prototypes for audio
+  * @file           : sdcard.h
+  * @brief          : Header for sdcard.c file.
+  *                   TODO
   ******************************************************************************
   * @attention
   *
@@ -10,19 +10,22 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef SRC_MISC_AUDIO_PLAYBACK_H_
-#define SRC_MISC_AUDIO_PLAYBACK_H_
+#ifndef SRC_DISCO_F413ZH_SDCARD_H_
+#define SRC_DISCO_F413ZH_SDCARD_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifdef FAKE_MIC
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
+/* Private includes ----------------------------------------------------------*/
+#include "ff_gen_drv.h"
+#include "sd_diskio.h"
+
 
 /* Exported types ------------------------------------------------------------*/
 
@@ -31,25 +34,18 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions prototypes ---------------------------------------------*/
+uint32_t get_files(const char* path, const char* extension, char* files[],
+                   FSIZE_t sizes[]);
+uint8_t* get_data(const char* path, char* file, FSIZE_t size);
+uint32_t test_txt_file(void);
 
-typedef enum {
-  AUDIO_ERROR_NONE = 0,
-  AUDIO_ERROR_NOTREADY,
-  AUDIO_ERROR_IO,
-  AUDIO_ERROR_EOF,
-} AUDIO_ErrorTypeDef;
-void AudioPlay_demo(void);
-uint8_t AUDIO_Process(void);
-void AudioInit(void);
-void AudioDeinit(void);
-void AudioPlay(uint8_t* data, uint32_t size);
-void AudioLoop(void);
-void AudioSamples(uint8_t* buf);
-
-#endif /* FAKE_MIC */
+/* Private defines -----------------------------------------------------------*/
+#define MAX_FILES 16
+#define MAX_FILENAME_LEN 32
+#define MAX_PATH_LEN 64
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // SRC_MISC_AUDIO_PLAYBACK_H_
+#endif  // SRC_DISCO_F413ZH_SDCARD_H_

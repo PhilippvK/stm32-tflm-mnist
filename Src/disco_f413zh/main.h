@@ -52,15 +52,16 @@ extern "C" {
 
 // TODO(PhilippvK): Comment
 #include "misc.h"
+#include "bsp.h"
 
 /* Exported types ------------------------------------------------------------*/
 
 /* Exported constants --------------------------------------------------------*/
+#define MX_UART_Init MX_USART6_UART_Init
 
 /* Exported macro ------------------------------------------------------------*/
 // 565 - 16 bit
 #define GS2RGB(x) (uint16_t)(((x >> 3) << 11)|((x >> 2) << 5)|(x >> 3))
-#define MX_UART_Init MX_USART6_UART_Init
 
 /* Exported functions prototypes ---------------------------------------------*/
 int __io_putchar(int ch);

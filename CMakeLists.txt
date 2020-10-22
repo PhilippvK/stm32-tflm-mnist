@@ -115,17 +115,17 @@ ENDIF()
 
 ### Configure STM32 HAL/BSP/LL ###
 IF(${TFLM_BOARD} STREQUAL "disco_f413zh")
-  FIND_PACKAGE(STM32HAL COMPONENTS sram gpio uart fmpi2c i2s
-  dac adc dfsdm sd dma qspi REQUIRED)
+  FIND_PACKAGE(STM32HAL COMPONENTS sram gpio uart fmpi2c
+  dfsdm sd dma qspi REQUIRED)
   FIND_PACKAGE(STM32LL COMPONENTS fsmc sdmmc REQUIRED)
-  FIND_PACKAGE(STM32BSP COMPONENTS ts lcd audio ili9325 stmpe811
+  FIND_PACKAGE(STM32BSP COMPONENTS ts lcd ili9325 stmpe811
   st7789h2 ft6x06 wm8994 psram sd REQUIRED)
 ELSEIF(${TFLM_BOARD} STREQUAL "disco_f769ni")
-  FIND_PACKAGE(STM32HAL COMPONENTS sram gpio uart i2s dac adc
-  dfsdm sd dma dma2d qspi dsi ltdc sdram sai i2c REQUIRED)
+  FIND_PACKAGE(STM32HAL COMPONENTS sram gpio uart
+  dfsdm sd dma qspi dsi i2c sdram dma2d ltdc REQUIRED)
   FIND_PACKAGE(STM32LL COMPONENTS fmc sdmmc REQUIRED)
-  FIND_PACKAGE(STM32BSP COMPONENTS ts lcd audio stmpe811
-  st7789h2 ft6x06 wm8994 sdram sd otm8009a REQUIRED)
+  FIND_PACKAGE(STM32BSP COMPONENTS ts lcd
+  ft6x06 sdram sd otm8009a REQUIRED)
 ENDIF()
 
 # Gather all project source files
@@ -142,7 +142,7 @@ FILE(GLOB EXAMPLE_SOURCES
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}
-    "${PROJECT_SOURCE_DIR}/"
+    "${PROJECT_SOURCE_DIR}/Src"
     "${PROJECT_SOURCE_DIR}/Src/misc"
     "${PROJECT_SOURCE_DIR}/Src/misc/benchmarking"
     "${PROJECT_SOURCE_DIR}/Src/${TFLM_BOARD}"

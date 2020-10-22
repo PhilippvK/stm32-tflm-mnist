@@ -33,11 +33,7 @@
 /* Private user code ---------------------------------------------------------*/
 
 /* External variables --------------------------------------------------------*/
-extern SAI_HandleTypeDef haudio_out_sai;
-extern DFSDM_Filter_HandleTypeDef       hAudioInTopLeftFilter;
-extern DFSDM_Filter_HandleTypeDef       hAudioInTopRightFilter;
-extern DFSDM_Filter_HandleTypeDef       hAudioInButtomLeftFilter;
-extern DFSDM_Filter_HandleTypeDef       hAudioInButtomRightFilter;
+extern SD_HandleTypeDef uSdHandle;
 
 /******************************************************************************/
 /*           Cortex-M7 Processor Interruption and Exception Handlers          */
@@ -103,9 +99,6 @@ void PendSV_Handler(void) {
   */
 void SysTick_Handler(void) {
   HAL_IncTick();
-#ifdef FAKE_MIC
-  AudioLoop();
-#endif /* FAKE_MIC */
 }
 
 /******************************************************************************/
@@ -116,46 +109,28 @@ void SysTick_Handler(void) {
 /******************************************************************************/
 
 /**
-  * @brief  This function handles DMA2 Stream 0 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void DMA2_Stream0_IRQHandler(void) {
-  HAL_DMA_IRQHandler(hAudioInTopLeftFilter.hdmaReg);
+ * @brief Handles SDMMC2 DMA Rx transfer interrupt request.
+ * @retval None
+ */
+void BSP_SDMMC2_DMA_Rx_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(uSdHandle.hdmarx);
 }
 
 /**
-  * @brief  This function handles DMA2 Stream 5 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void DMA2_Stream5_IRQHandler(void) {
-  HAL_DMA_IRQHandler(hAudioInTopRightFilter.hdmaReg);
+ * @brief Handles SDMMC2 DMA Tx transfer interrupt request.
+ * @retval None
+ */
+void BSP_SDMMC2_DMA_Tx_IRQHandler(void)
+{
+  HAL_DMA_IRQHandler(uSdHandle.hdmatx);
 }
 
 /**
-  * @brief  This function handles DMA2 Stream 1 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_OUT_SAIx_DMAx_IRQHandler(void) {
-  HAL_DMA_IRQHandler(haudio_out_sai.hdmatx);
-}
-
-/**
-  * @brief  This function handles DMA2 Stream 6 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_DFSDMx_DMAx_BUTTOM_LEFT_IRQHandler(void) {
-  HAL_DMA_IRQHandler(hAudioInButtomLeftFilter.hdmaReg);
-}
-
-/**
-  * @brief  This function handles DMA2 Stream 7 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_DFSDMx_DMAx_BUTTOM_RIGHT_IRQHandler(void) {
-  HAL_DMA_IRQHandler(hAudioInButtomRightFilter.hdmaReg);
+ * @brief Handles SD1 card interrupt request.
+ * @retval None
+ */
+void BSP_SDMMC2_IRQHandler(void)
+{
+  HAL_SD_IRQHandler(&uSdHandle);
 }

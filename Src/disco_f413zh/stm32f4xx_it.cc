@@ -34,8 +34,6 @@
 /* Private user code ---------------------------------------------------------*/
 
 /* External variables --------------------------------------------------------*/
-extern I2S_HandleTypeDef               haudio_i2s;
-extern DFSDM_Filter_HandleTypeDef      hAudioInDfsdmFilter[];
 
 /******************************************************************************/
 /*           Cortex-M7 Processor Interruption and Exception Handlers          */
@@ -101,9 +99,6 @@ void PendSV_Handler(void) {
   */
 void SysTick_Handler(void) {
   HAL_IncTick();
-#ifdef FAKE_MIC
-  AudioLoop();
-#endif /* FAKE_MIC */
 }
 
 /******************************************************************************/
@@ -113,31 +108,3 @@ void SysTick_Handler(void) {
 /* please refer to the startup file (startup_stm32f7xx.s).                    */
 /******************************************************************************/
 
-/**
-  * @brief  This function handles DFSDM MIC1 DMA interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_DFSDM_DMAx_MIC1_IRQHandler(void) {
-    HAL_DMA_IRQHandler(hAudioInDfsdmFilter[POS_VAL(
-                       INPUT_DEVICE_DIGITAL_MIC1)].hdmaReg);
-}
-
-/**
-  * @brief  This function handles DFSDM MIC2 DMA interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_DFSDM_DMAx_MIC2_IRQHandler(void) {
-  HAL_DMA_IRQHandler(hAudioInDfsdmFilter[POS_VAL(
-                     INPUT_DEVICE_DIGITAL_MIC2)].hdmaReg);
-}
-
-/**
-  * @brief  This function handles I2S DMA interrupt request.
-  * @param  None
-  * @retval None
-  */
-void AUDIO_OUT_I2Sx_DMAx_IRQHandler(void) {
-  HAL_DMA_IRQHandler(haudio_i2s.hdmatx);
-}

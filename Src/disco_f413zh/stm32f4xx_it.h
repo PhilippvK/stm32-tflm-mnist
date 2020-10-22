@@ -44,11 +44,6 @@ void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
 
-void BSP_PSRAM_DMA_IRQHandler(void);
-void AUDIO_OUT_I2Sx_DMAx_IRQHandler(void);
-void AUDIO_DFSDM_DMAx_MIC1_IRQHandler(void);
-void AUDIO_DFSDM_DMAx_MIC2_IRQHandler(void);
-
 #ifdef __cplusplus
 }
 #endif
