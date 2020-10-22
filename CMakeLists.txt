@@ -134,6 +134,8 @@ FILE(GLOB EXAMPLE_SOURCES
     "Src/*.cc"
     "Src/misc/*.c"
     "Src/misc/*.cc"
+    "Src/misc/benchmarking/*.c"
+    "Src/misc/benchmarking/*.cc"
     "Src/${TFLM_BOARD}/*.c"
     "Src/${TFLM_BOARD}/*.cc"
     )
@@ -142,7 +144,8 @@ INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}
     "${PROJECT_SOURCE_DIR}/"
     "${PROJECT_SOURCE_DIR}/Src/misc"
-    "${PROJECT_SOURCE_DIR}/Src/${TFLM_BOARD}/"
+    "${PROJECT_SOURCE_DIR}/Src/misc/benchmarking"
+    "${PROJECT_SOURCE_DIR}/Src/${TFLM_BOARD}"
     ${STM32HAL_INCLUDE_DIR}
     ${STM32LL_INCLUDE_DIR}
     ${CMSIS_INCLUDE_DIRS}
