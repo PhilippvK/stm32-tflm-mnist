@@ -4,6 +4,8 @@ This demo implements a simple handwriting recognizer, which can transcribe digit
 
 Moreover, the input can be taken either from the touchscreen, enabling us to draw the digits ourselves, or from images showing digits loaded from the memory card.
 
+You may also be interested in our wrapper repository [stm32-tflm-demos](https://github.com/PhilippvK/stm32-tflm-demos) for further details.
+
 ## Build
 ### Project configuration
 Firstly, you have to choose whether you want to use the board's touchscreen to draw and recognize digits real-time, or load pre-recorded samples from the SD card. You make this choice by setting ```FAKE_TOUCH``` on line 72 in ```CMakeLists.txt``` to either ON or OFF.
