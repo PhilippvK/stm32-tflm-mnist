@@ -8,7 +8,10 @@ You may also be interested in our wrapper repository [stm32-tflm-demos](https://
 
 ## Build
 ### Project configuration
-Firstly, you have to choose whether you want to use the board's touchscreen to draw and recognize digits real-time, or load pre-recorded samples from the SD card. You make this choice by setting ```FAKE_TOUCH``` on line 72 in ```CMakeLists.txt``` to either ON or OFF.
+
+First configure your board and features like CMSIS-NN, Benchmarking,... as explained [here](https://github.com/PhilippvK/stm32-tflm-demos/blob/master/docs/Usage.md).
+
+Then you have to choose whether you want to use the board's touchscreen to draw and recognize digits real-time, or load pre-recorded samples from the SD card. You make this choice by setting `FAKE_TOUCH` in `CMakeLists.txt` to either ON or OFF.
 ```
 SET(FAKE_TOUCH OFF) # Use on board touchscreen
 SET(FAKE_TOUCH ON) # Use samples from the SD card
@@ -26,9 +29,7 @@ make flash
 ```
 For more details about build instruction, see the [main README](https://github.com/PhilippvK/stm32-tflm-demos/blob/master/README.md).
 
-You might have to run ```make flash``` several times if you get a deployment error.
-
-Other make targets we provide include ```make debug``` and ```make convert```(to convert the *.tflite* file into a board-readable format).
+Other make targets we provide include `make debug` and `make convert` (to convert the `*.tflite` file into [tfite_micro_compiler](https://github.com/tum-ei-eda/tflite_micro_compiler) sources).
 
 ### Rebuilding the project
-It is mandatory to delete ```CMakeCache.txt``` before re-building your project. Moreover, you should delete the *_deps* folder under *build* before running ```cmake ..``` again.
+It is mandatory to delete `CMakeCache.txt` after changing the STM32 board. Sometimes, you need to delete the `_deps` folder under `build` before running `cmake ..` again.
