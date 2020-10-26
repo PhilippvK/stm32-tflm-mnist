@@ -39,6 +39,10 @@
   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
+  * Modifications by @PhilippvK:
+  * - Formatted according to cpplint
+  * - Enabled large filename support
+  *
   ******************************************************************************
   */
 

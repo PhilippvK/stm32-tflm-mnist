@@ -1,11 +1,12 @@
 /**
   ******************************************************************************
   * File Name          : bsp.cc
+  * Author             : Philipp v. K. <philipp.van-kempen@tum.de>
   * Description        : This file is used to init the Board Support Packages
   ******************************************************************************
   * @attention
   *
-  * TODO: Copyright
+  * Copyright 2020 <TODO>
   *
   ******************************************************************************
   */

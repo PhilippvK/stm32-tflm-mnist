@@ -11,6 +11,16 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+Modifications by @PhilippvK:
+- Change for MNIST example
+- Formatted according to cpplint
+- Removed Prefix from Includes
+- Support tflite_micro_compiler by defining `TFLM_MODE_COMPILER`
+  See: https://github.com/tum-ei-eda/tflite_micro_compiler
+- Support Benchmarking by defining `BENCHMARKING`
+  See: https://github.com/PhilippvK/stm32-tflm-benchmarking
+
 ==============================================================================*/
 
 // TODO: add compiler version
@@ -28,6 +38,7 @@ limitations under the License.
 
 // TODO(PhilippvK): move somewhere else
 #include "misc.h"
+
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
   tflite::ErrorReporter *error_reporter = nullptr;

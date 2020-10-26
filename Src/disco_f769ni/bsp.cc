@@ -1,11 +1,12 @@
 /**
   ******************************************************************************
   * File Name          : bsp.cc
+  * Author             : Philipp v. K. <philipp.van-kempen@tum.de>
   * Description        : This file is used to init the Board Support Packages
   ******************************************************************************
   * @attention
   *
-  * TODO: Copyright
+  * Copyright 2020 <TODO>
   *
   ******************************************************************************
   */
@@ -35,7 +36,9 @@ void BSP_Init(void) {
   uint8_t  lcd_status = LCD_OK;
   lcd_status = BSP_LCD_Init();
   while (lcd_status != LCD_OK) {}
+
   BSP_LCD_LayerDefaultInit(0, LCD_FB_START_ADDRESS);
+
   BSP_LCD_Clear(LCD_COLOR_WHITE);
 
   /* Configure Touchscreen (optional) */

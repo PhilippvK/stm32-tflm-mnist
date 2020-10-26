@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file           : sdcard.c
-  * @brief          : TODO
-  *                   TODO
+  * @file           : sdcard.cc
+  * @brief          : Contains routines for listing files of a specific
+  *                   type in an SD card directory and for loading them
   ******************************************************************************
   * @attention
   *

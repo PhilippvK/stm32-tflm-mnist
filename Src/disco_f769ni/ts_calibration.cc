@@ -1,11 +1,16 @@
 /**
   ******************************************************************************
-  * @file    BSP/Src/ts_calibration.c
-  * @author  MCD Application Team
+  * @file    ts_calibration.cc
+  * @author  (partially) MCD Application Team
+  * @author  Philipp v. K. <philipp.van-kempen@tum.de>
   * @brief   This example code shows how to calibrate the touchscreen.
   ******************************************************************************
   *
-  * Copyright 2020 <TODO>
+  * [Copyright (c) 2020 STMicroelectronics]
+  *
+  * Modifications by @PhilippvK
+  * - renamed to `ts_calibration.cc`
+  * - Changed formatting according to cpplint
   *
   ******************************************************************************
   */

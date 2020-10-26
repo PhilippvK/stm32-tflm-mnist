@@ -1,6 +1,15 @@
-
-/* Copyright 2020 <TODO>
-==============================================================================*/
+ /**
+  ******************************************************************************
+  * File Name          : msic.h
+  * Author             : Philipp v. K. <philipp.van-kempen@tum.de>
+  * Description        : Contains for helper functions for the mnist example
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright 2020 <TODO>
+  *
+  ******************************************************************************
+  */
 
 #ifndef SRC_MISC_MISC_H_
 #define SRC_MISC_MISC_H_

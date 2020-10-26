@@ -1,10 +1,20 @@
-// Copyright 2020 <TODO>
+/**
+  ******************************************************************************
+  * File Name          : bsp.cc
+  * Author             : Philipp v. K. <philipp.van-kempen@tum.de>
+  * Description        : Comntains Helper Functions for mnist example
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright 2020 <TODO>
+  *
+  ******************************************************************************
+  */
 
 #include <cstring>
 #include "misc.h"
 #include "main.h"
 
-// MNIST (TODO: mode to misc.cc)
 signed char prev_value = -1;
 bool touched = false;
 static int32_t x0 = -1, y0 = -1;

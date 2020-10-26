@@ -1,11 +1,16 @@
 /**
   ******************************************************************************
-  * @file           : main.cpp
-  * @brief          : Main program body
+  * @file           : main.cc
+  * @author         : Philipp v. K. <philipp.van-kempen@tum.de>
+  * @brief          : Main program for mnist example
+  *                   Initializes Peripherals and calls Setup- and
+  *                   Loop-Routines of TFLite Model
   ******************************************************************************
   * @attention
   *
-  * TODO: License
+  * The file was originally generated with
+  * STM32CubeIDE [Copyright (c) 2020 STMicroelectronics]
+  * but modified intensively.
   *
   * Copyright 2020 <TODO>
   *

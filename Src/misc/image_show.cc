@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * @file    Src/image_show.c
-  * @author  TODO
-  * @brief   TODO
+  * @file    image_show.cc
+  * @author  Philipp v. K. <philipp.van-kempen@tum.de>
+  * @brief   Contains Routines for drawing BMP images on the LCD
   *
   ******************************************************************************
   * @attention

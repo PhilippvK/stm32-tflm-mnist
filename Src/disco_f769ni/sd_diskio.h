@@ -2,6 +2,7 @@
   ******************************************************************************
   * @file    sd_diskio.h
   * @author  MCD Application Team
+  * @author  Philipp van Kempen <philipp.van-kempen@tum.de>
   * @brief   Header for sd_diskio.c module.
   ******************************************************************************
   * @attention
@@ -39,6 +40,9 @@
   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  *
+  * Modifications by @PhilippvK:
+  * - Formatted according to cpplint
   *
   ******************************************************************************
   */

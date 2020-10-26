@@ -1,4 +1,10 @@
+/*
 
+  See header file!
+
+  Copyright 2020 <TODO>
+
+==============================================================================*/
 
 extern const unsigned char model_data_tflite[] = {
   0x1c, 0x00, 0x00, 0x00, 0x54, 0x46, 0x4c, 0x33, 0x00, 0x00, 0x12, 0x00,

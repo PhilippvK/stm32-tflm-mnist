@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
   * @file           : sdcard.h
-  * @brief          : Header for sdcard.c file.
-  *                   TODO
+  * @author         : Philipp v. K. <philipp.van-kempen@tum.de>
+  * @brief          : Header for sdcard.cc file.
   ******************************************************************************
   * @attention
   *
@@ -12,8 +12,8 @@
   */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef SRC_DISCO_F413ZH_SDCARD_H_
-#define SRC_DISCO_F413ZH_SDCARD_H_
+#ifndef SRC_SDCARD_H_
+#define SRC_SDCARD_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,4 +48,4 @@ uint32_t test_txt_file(void);
 }
 #endif
 
-#endif  // SRC_DISCO_F413ZH_SDCARD_H_
+#endif  // SRC_SDCARD_H_
