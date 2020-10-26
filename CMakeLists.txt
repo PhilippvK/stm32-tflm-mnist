@@ -69,29 +69,31 @@ ENDIF()
 ADD_DEFINITIONS(-DNOMBED)
 
 ### Configure 'mnist' Example ###
-SET(FAKE_TOUCH OFF) # Use SD Card instead of Touchscreen
+SET(FAKE_TOUCH ON) # Use SD Card instead of Touchscreen
 ADD_DEFINITIONS(-DTFLM_EXAMPLE="mnist" -DTFLM_BOARD="${TFLM_BOARD}")
 IF(${FAKE_TOUCH})
   ADD_DEFINITIONS(-DFAKE_TOUCH -DTFLM_FILE_EXT="*.bmp")
 ENDIF()
 
-### Edit User/Name for using a custom Repository ###
-SET(CUBE_REPO_USER "STMicroelectronics")
-SET(CUBE_REPO_NAME "STM32Cube${STM32_FAMILY}")
+IF(NOT STM32Cube_DIR)
+  ### Edit User/Name for using a custom Repository ###
+  SET(CUBE_REPO_USER "STMicroelectronics")
+  SET(CUBE_REPO_NAME "STM32Cube${STM32_FAMILY}")
 
-# Fetching Cube Firmware Repository
-FIND_PACKAGE(Git REQUIRED)
-SET(CUBE_SOURCE "${CMAKE_BINARY_DIR}/STM32${STM32_FAMILY}-Cube-Firmware")
-IF(EXISTS ${CUBE_SOURCE})
-  MESSAGE(STATUS "Cube FW directory exists")
-ELSE()
-  MESSAGE(STATUS "Getting Cube Firmware")
-  SET(GIT_REPOSITORY
-  "https://github.com/${CUBE_REPO_USER}/${CUBE_REPO_NAME}.git")
-  EXECUTE_PROCESS(COMMAND
-  ${GIT_EXECUTABLE} clone ${GIT_REPOSITORY} ${CUBE_SOURCE})
+  # Fetching Cube Firmware Repository
+  FIND_PACKAGE(Git REQUIRED)
+  SET(CUBE_SOURCE "${CMAKE_BINARY_DIR}/STM32${STM32_FAMILY}-Cube-Firmware")
+  IF(EXISTS ${CUBE_SOURCE})
+    MESSAGE(STATUS "Cube FW directory exists")
+  ELSE()
+    MESSAGE(STATUS "Getting Cube Firmware")
+    SET(GIT_REPOSITORY
+    "https://github.com/${CUBE_REPO_USER}/${CUBE_REPO_NAME}.git")
+    EXECUTE_PROCESS(COMMAND
+    ${GIT_EXECUTABLE} clone ${GIT_REPOSITORY} ${CUBE_SOURCE})
+  ENDIF()
+  SET(STM32Cube_DIR ${CUBE_SOURCE})
 ENDIF()
-SET(STM32Cube_DIR ${CUBE_SOURCE})
 
 # Prepare Tensorflow Lite (micro)
 #SET(TF_COMMIT d6426459bca2971b611ca9773858e55f6cc1a9af) # TODO
