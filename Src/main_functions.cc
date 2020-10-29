@@ -23,14 +23,22 @@ Modifications by @PhilippvK:
 
 ==============================================================================*/
 
-// TODO: add compiler version
-
+#ifdef TFLM_MODE_COMPILER
+#include "tensorflow/lite/c/common.h"
+#include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
+#include "offline_model.h"
+#else
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/micro/micro_error_reporter.h"
+#ifdef MEMORY_REPORTING
+#include "tensorflow/lite/micro/recording_micro_interpreter.h"
+#else
 #include "tensorflow/lite/micro/micro_interpreter.h"
+#endif /* MEMORY_REPORTING */
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/version.h"
+#endif /* TFLM_MODE_COMPILER */
 
 #include "main_functions.h"
 
@@ -42,16 +50,23 @@ Modifications by @PhilippvK:
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
   tflite::ErrorReporter *error_reporter = nullptr;
+#ifndef TFLM_MODE_COMPILER
   const tflite::Model *model = nullptr;
-  tflite::MicroInterpreter *interpreter = nullptr;
+#ifdef MEMORY_REPORTING
+  tflite::RecordingMicroInterpreter* interpreter = nullptr;
+#else
+  tflite::MicroInterpreter* interpreter = nullptr;
+#endif /* MEMORY_REPORTING */
   TfLiteTensor *input = nullptr;
   TfLiteTensor *output = nullptr;
-  int inference_count = 0;
 
   // Create an area of memory to use for input, output, and intermediate arrays.
   // Finding the minimum value for your model may require some trial and error.
   constexpr int kTensorArenaSize = 16 * 1024;
   uint8_t tensor_arena[kTensorArenaSize];
+#endif /* TFLM_MODE_COMPILER */
+  int inference_count = 0;
+
 }  // namespace
 
 // The name of this function is important for Arduino compatibility.
@@ -62,8 +77,9 @@ void setup() {
   static tflite::MicroErrorReporter micro_error_reporter;
   error_reporter = &micro_error_reporter;
 
-  error_reporter->Report("Hello from the error reporter");
-
+#ifdef TFLM_MODE_COMPILER
+  mnist_init();
+#else
   // Map the model into a usable data structure. This doesn't involve any
   // copying or parsing, it's a very lightweight operation.
   model = tflite::GetModel(model_data_tflite);
@@ -83,10 +99,17 @@ void setup() {
     resolver.AddSoftmax();
 
   // Build an interpreter to run the model with.
+#ifdef MEMORY_REPORTING
+  static tflite::RecordingMicroInterpreter static_interpreter(model, resolver,
+                 tensor_arena,
+                 kTensorArenaSize,
+                 error_reporter);
+#else
   static tflite::MicroInterpreter static_interpreter(model, resolver,
                  tensor_arena,
                  kTensorArenaSize,
                  error_reporter);
+#endif /* MEMORY_REPORTING */
   interpreter = &static_interpreter;
 
   // Allocate memory from the tensor_arena for the model's tensors.
@@ -99,6 +122,7 @@ void setup() {
   // Obtain pointers to the model's input and output tensors.
   input = interpreter->input(0);
   output = interpreter->output(0);
+#endif /* TFLM_MODE_COMPILER */
 
   // Keep track of how many inferences we have performed.
   inference_count = 0;
@@ -121,16 +145,33 @@ void loop() {
   fprintf(stderr, "Save image\n\r");
   SaveMNISTInput();
   // Place our calculated x value in the model's input tensor
-  for (uint32_t i = 0; i < INPUT_IMAGE_SIZE * INPUT_IMAGE_SIZE; i++)
+  for (uint32_t i = 0; i < INPUT_IMAGE_SIZE * INPUT_IMAGE_SIZE; i++) {
+#ifdef TFLM_MODE_COMPILER
+    tflite::GetTensorData<int8_t>(mnist_input(0))[0] = (MNISTGetNNInputImage()[i]/2)-127;
+#else
     input->data.int8[i] = (int8_t)(MNISTGetNNInputImage()[i]/2)-127;
+#endif /* TFLM_MODE_COMPILER */
+  }
 
   // Run inference, and report any error
+#ifdef TFLM_MODE_COMPILER
+  hello_world_invoke();
+#else
   invoke_status = interpreter->Invoke();
   if (invoke_status != kTfLiteOk) {
     error_reporter->Report("Invoke failed");
   }
+#endif /* TFLM_MODE_COMPILER */
 
+#ifdef TFLM_MODE_COMPILER
+  int8_t* output_array = tflite::GetTensorData<int8_t>(mnist_output(0))[0];;
+#else
   int8_t* output_array = output->data.int8;
+#endif /* TFLM_MODE_COMPILER */
+#ifdef MEMORY_REPORTING
+  // Print out detailed allocation information:
+  interpreter->GetMicroAllocator().PrintAllocations();
+#endif /* MEMORY_REPORTING */
 
   MNISTHandleOutput(output_array);
 }

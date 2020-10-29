@@ -65,6 +65,16 @@ IF(${ENABLE_BENCHMARKING})
   ADD_DEFINITIONS(-DBENCHMARKING)
 ENDIF()
 
+### Enable/Disable Memory Reporting ###
+SET(ENABLE_MEMORY_REPORTING ON)
+IF(${ENABLE_MEMORY_REPORTING})
+  IF(${TFLM_MODE} STREQUAL "interpreter")
+    ADD_DEFINITIONS(-DMEMORY_REPORTING)
+  ELSE()
+    MESSAGE(FATAL_ERROR "Memory Reporting only works with TFLite Micro Interpreter")
+  ENDIF()
+ENDIF()
+
 # Disable MBED (Only valid for Tensorflow Toolchain)
 ADD_DEFINITIONS(-DNOMBED)
 
