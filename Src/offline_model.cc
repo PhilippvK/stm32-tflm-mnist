@@ -1,8 +1,9 @@
 // This file is generated. Do not edit.
-// Generated on: 02.11.2020 11:45:46
+// Generated on: 02.11.2020 11:17:41
 
 #include "tensorflow/lite/c/builtin_op_data.h"
 #include "tensorflow/lite/c/common.h"
+#include "tensorflow/lite/micro/kernels/fully_connected.h"
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 
 #if defined __GNUC__
@@ -215,11 +216,11 @@ TfLiteStatus mnist_init() {
       tflTensors[i].params.zero_point = quant->zero_point->data[0];
     }
   }
-  registrations[OP_CONV_2D] = tflite::ops::micro::Register_CONV_2D();
+  registrations[OP_CONV_2D] = tflite::Register_CONV_2D();
   registrations[OP_MAX_POOL_2D] = tflite::ops::micro::Register_MAX_POOL_2D();
   registrations[OP_RESHAPE] = tflite::ops::micro::Register_RESHAPE();
-  registrations[OP_FULLY_CONNECTED] = tflite::ops::micro::Register_FULLY_CONNECTED();
-  registrations[OP_SOFTMAX] = tflite::ops::micro::Register_SOFTMAX();
+  registrations[OP_FULLY_CONNECTED] = tflite::Register_FULLY_CONNECTED();
+  registrations[OP_SOFTMAX] = tflite::Register_SOFTMAX();
 
   for(size_t i = 0; i < 5; ++i) {
     tflNodes[i].inputs = nodeData[i].inputs;
