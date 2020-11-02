@@ -52,8 +52,8 @@ Modifications by @PhilippvK:
 
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
-  tflite::ErrorReporter *error_reporter = nullptr;
 #ifndef TFLM_MODE_COMPILER
+  tflite::ErrorReporter *error_reporter = nullptr;
   const tflite::Model *model = nullptr;
 #ifdef MEMORY_REPORTING
   tflite::RecordingMicroInterpreter* interpreter = nullptr;
@@ -77,12 +77,12 @@ void setup() {
   // Set up logging. Google style is to avoid globals or statics because of
   // lifetime uncertainty, but since this has a trivial destructor it's okay.
   // NOLINTNEXTLINE(runtime-global-variables)
-  static tflite::MicroErrorReporter micro_error_reporter;
-  error_reporter = &micro_error_reporter;
-
 #ifdef TFLM_MODE_COMPILER
   mnist_init();
 #else
+  static tflite::MicroErrorReporter micro_error_reporter;
+  error_reporter = &micro_error_reporter;
+
   // Map the model into a usable data structure. This doesn't involve any
   // copying or parsing, it's a very lightweight operation.
   model = tflite::GetModel(model_data_tflite);
@@ -169,7 +169,7 @@ void loop() {
   ticks_before = HAL_GetTick();
 #endif /* BENCHMARKING */
 #ifdef TFLM_MODE_COMPILER
-  hello_world_invoke();
+  mnist_invoke();
 #else
   invoke_status = interpreter->Invoke();
   if (invoke_status != kTfLiteOk) {
@@ -185,7 +185,7 @@ void loop() {
   ticks_before = HAL_GetTick();
 #endif /* BENCHMARKING */
 #ifdef TFLM_MODE_COMPILER
-  int8_t* output_array = tflite::GetTensorData<int8_t>(mnist_output(0))[0];;
+  int8_t* output_array = tflite::GetTensorData<int8_t>(mnist_output(0));
 #else
   int8_t* output_array = output->data.int8;
 #endif /* TFLM_MODE_COMPILER */

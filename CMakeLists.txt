@@ -21,7 +21,6 @@ SET(CMAKE_C_FLAGS "-mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -Wall \
 -mfpu=fpv4-sp-d16 -Wl,-Map=output.map -Wl,--gc-sections -g3")
 
 SET(TFLM_MODES interpreter compiler)
-SET(TFLM_COMPILER_EXECUTABLE "TODO") # TODO
 
 ### Configure STM32 Board here ###
 #SET(STM32_CHIP STM32F413ZHT6)
@@ -46,12 +45,6 @@ ENDIF()
 ### Configure TFML Mode here ###
 #SET(TFLM_MODE compiler)
 SET(TFLM_MODE interpreter)
-
-# (TODO)
-IF(${TFLM_MODE} STREQUAL compiler)
-  SET(CMAKE_TFLM_COMPILER_FILE ${CMAKE_MODULE_PATH}/tflm_compiler.cmake)
-  INCLUDE(${CMAKE_TFLM_COMPILER_FILE})
-ENDIF()
 
 ### Enable/Disable usage of CMSISNN custom kernels ###
 SET(TFLM_USE_CMSIS_NN ON)
@@ -79,6 +72,7 @@ ENDIF()
 ADD_DEFINITIONS(-DNOMBED)
 
 ### Configure 'mnist' Example ###
+SET(TFLM_EXAMPLE "mnist")
 SET(FAKE_TOUCH ON) # Use SD Card instead of Touchscreen
 ADD_DEFINITIONS(-DTFLM_EXAMPLE="mnist" -DTFLM_BOARD="${TFLM_BOARD}")
 IF(${FAKE_TOUCH})
@@ -109,6 +103,12 @@ ENDIF()
 #SET(TF_COMMIT d6426459bca2971b611ca9773858e55f6cc1a9af) # TODO
 FIND_PACKAGE(TFLite REQUIRED)
 SET(TFLITE_PLATFORM micro)
+
+# Setup Compiler
+SET(ENABLE_TFLM_COMPILER ON)
+IF(ENABLE_TFLM_COMPILER)
+  INCLUDE(external/tflite_micro_compiler.cmake)
+ENDIF()
 
 ### Configure FreeRTOS (optional, not supported!)
 #SET(FREERTOS_HEAP_IMPL 1)
