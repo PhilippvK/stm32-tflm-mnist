@@ -4,3 +4,6 @@
 [submodule "Src/misc/benchmarking"]
 	path = Src/misc/benchmarking
 	url = https://github.com/PhilippvK/stm32-tflm-benchmarking.git
+[submodule "external/tflite_micro_compiler"]
+	path = external/tflite_micro_compiler
+	url = https://github.com/PhilippvK/tflite_micro_compiler.git
