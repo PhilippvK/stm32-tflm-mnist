@@ -76,12 +76,21 @@ void PreprocessImage(void) {
   }
 }
 
-uint8_t ConvertHighColorToGS(uint16_t pixel) {
+uint8_t Convert565RGBToGS(uint16_t pixel) {
   uint8_t r = pixel >> 11 & 0x1F;
   uint8_t g = pixel >> 5 & 0x3F;
   uint8_t b = pixel & 0x1F;
   uint8_t luminance = (r + (g>>1) + b) / 3;
   uint8_t gs = luminance * (255 / 31.0);
+  return gs;
+}
+
+uint8_t Convert8888RGBToGS(uint32_t pixel) {
+  uint8_t r = pixel >> 16 & 0xFF;
+  uint8_t g = pixel >> 8 & 0xFF;
+  uint8_t b = pixel & 0xFF;
+  uint8_t luminance = (r + g + b) / 3;
+  uint8_t gs = luminance;
   return gs;
 }
 
@@ -144,7 +153,7 @@ void SaveMNISTInput(void) {
   TSInputImage[0][0] = 1;  // TODO(PhilippvK): find out why?
   for (uint32_t y = 0; y < image_size_pixel; y++) {
     for (uint32_t x = 0; x < image_size_pixel; x++) {
-      TSInputImage[y][x] = ConvertHighColorToGS(BSP_LCD_ReadPixel(x + marginX,
+      TSInputImage[y][x] = RGB2GS(BSP_LCD_ReadPixel(x + marginX,
                                                                   y + marginY));
     }
   }
@@ -158,7 +167,7 @@ void SaveMNISTInput(void) {
                          INPUT_IMAGE_SIZE_PIXEL/2 - image_size/2;
   for (uint32_t y = 0; y < image_size; y++) {
     for (uint32_t x = 0; x < image_size; x++) {
-      NNInputImage[y][x] = ConvertHighColorToGS(BSP_LCD_ReadPixel(x + marginX,
+      NNInputImage[y][x] = RGB2GS(BSP_LCD_ReadPixel(x + marginX,
                                                                   y + marginY));
     }
   }

@@ -60,6 +60,7 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 // 8888 - 24 bit
 #define GS2RGB(x) (uint32_t)((0xff << 24)|(x << 16)|(x << 8)|x)
+#define RGB2GS(x) (uint8_t)Convert8888RGBToGS(x)
 
 /* Exported functions prototypes ---------------------------------------------*/
 int __io_putchar(int ch);

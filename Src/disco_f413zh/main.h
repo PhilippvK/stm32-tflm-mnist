@@ -60,6 +60,7 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 // 565 - 16 bit
 #define GS2RGB(x) (uint16_t)(((x >> 3) << 11)|((x >> 2) << 5)|(x >> 3))
+#define RGB2GS(x) (uint8_t)Convert565RGBToGS(x)
 
 /* Exported functions prototypes ---------------------------------------------*/
 int __io_putchar(int ch);
