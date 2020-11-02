@@ -6,6 +6,10 @@ Moreover, the input can be taken either from the touchscreen, enabling us to dra
 
 You may also be interested in our wrapper repository [stm32-tflm-demos](https://github.com/PhilippvK/stm32-tflm-demos) for further details.
 
+## Demo
+
+![](mnist_demo.gif)
+
 ## Build
 ### Project configuration
 
