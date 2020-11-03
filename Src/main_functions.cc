@@ -46,9 +46,7 @@ Modifications by @PhilippvK:
 // TODO(PhilippvK): move somewhere else
 #include "misc.h"
 
-#ifdef BENCHMARKING
 #include "benchmarking.h"
-#endif /* BENCHMARKING */
 
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
@@ -140,15 +138,16 @@ void setup() {
 // The name of this function is important for Arduino compatibility.
 void loop() {
   static TfLiteStatus invoke_status;
+  DECLARE_BENCHMARK(populate);
+  DECLARE_BENCHMARK(invoke);
+  DECLARE_BENCHMARK(respond);
 
   MNISTReset();
 #ifndef FAKE_TOUCH
   while (!GetTouchInput()) {}
 #endif /* FAKE_TOUCH */
-#ifdef BENCHMARKING
-  uint32_t ticks_before, ticks_after;
-  ticks_before = HAL_GetTick();
-#endif /* BENCHMARKING */
+
+  START_BENCHMARK(populate);
   fprintf(stderr, "Save image\n\r");
   SaveMNISTInput();
   // Place our calculated x value in the model's input tensor
@@ -159,15 +158,10 @@ void loop() {
     input->data.int8[i] = (int8_t)(MNISTGetNNInputImage()[i]/2)-127;
 #endif /* TFLM_MODE_COMPILER */
   }
-#ifdef BENCHMARKING
-  ticks_after = HAL_GetTick();
-  update_avg_ticks(TICKS_POPULATE, (int32_t)(ticks_after-ticks_before));
-#endif /* BENCHMARKING */
+  STOP_BENCHMARK(populate);
 
   // Run inference, and report any error
-#ifdef BENCHMARKING
-  ticks_before = HAL_GetTick();
-#endif /* BENCHMARKING */
+  START_BENCHMARK(invoke); 
 #ifdef TFLM_MODE_COMPILER
   mnist_invoke();
 #else
@@ -176,14 +170,9 @@ void loop() {
     error_reporter->Report("Invoke failed");
   }
 #endif /* TFLM_MODE_COMPILER */
-#ifdef BENCHMARKING
-  ticks_after = HAL_GetTick();
-  update_avg_ticks(TICKS_INVOKE, (int32_t)(ticks_after-ticks_before));
-#endif /* BENCHMARKING */
+  STOP_BENCHMARK(invoke); 
 
-#ifdef BENCHMARKING
-  ticks_before = HAL_GetTick();
-#endif /* BENCHMARKING */
+  START_BENCHMARK(respond);
 #ifdef TFLM_MODE_COMPILER
   int8_t* output_array = tflite::GetTensorData<int8_t>(mnist_output(0));
 #else
@@ -195,8 +184,11 @@ void loop() {
 #endif /* MEMORY_REPORTING */
 
   MNISTHandleOutput(output_array);
-#ifdef BENCHMARKING
-  ticks_after = HAL_GetTick();
-  update_avg_ticks(TICKS_RESPOND, (int32_t)(ticks_after-ticks_before));
-#endif /* BENCHMARKING */
+  STOP_BENCHMARK(respond);
+
+  // The following lines will only run if benchmarking is enabled in CMakeLists.txt
+  PRINT_TIMESTAMP();
+  PRINT_BENCHMARK(populate);
+  PRINT_BENCHMARK(invoke);
+  PRINT_BENCHMARK(respond);
 }

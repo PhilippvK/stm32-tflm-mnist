@@ -35,10 +35,6 @@
 #include <math.h>
 #include <cstdio>
 
-#ifdef BENCHMARKING
-#include "benchmarking.h"
-#endif /* BENCHMARKING */
-
 /* Private typedef -----------------------------------------------------------*/
 
 /* Private define ------------------------------------------------------------*/
@@ -128,10 +124,6 @@ int main(void) {
 #endif /* FAKE_TOUCH*/
 
     loop();
-
-#ifdef BENCHMARKING
-    print_summary(TICKS_POPULATE|TICKS_INVOKE|TICKS_RESPOND);
-#endif /* BENCHMARKING */
   }
 
   return 0;

@@ -53,7 +53,7 @@ IF(${TFLM_USE_CMSIS_NN})
 ENDIF()
 
 ### Enable/Disable Benchmarking ###
-SET(ENABLE_BENCHMARKING OFF)
+SET(ENABLE_BENCHMARKING ON)
 IF(${ENABLE_BENCHMARKING})
   ADD_DEFINITIONS(-DBENCHMARKING)
 ENDIF()
@@ -73,7 +73,7 @@ ADD_DEFINITIONS(-DNOMBED)
 
 ### Configure 'mnist' Example ###
 SET(TFLM_EXAMPLE "mnist")
-SET(FAKE_TOUCH ON) # Use SD Card instead of Touchscreen
+SET(FAKE_TOUCH OFF) # Use SD Card instead of Touchscreen
 ADD_DEFINITIONS(-DTFLM_EXAMPLE="mnist" -DTFLM_BOARD="${TFLM_BOARD}")
 IF(${FAKE_TOUCH})
   ADD_DEFINITIONS(-DFAKE_TOUCH -DTFLM_FILE_EXT="*.bmp")
@@ -146,8 +146,6 @@ FILE(GLOB EXAMPLE_SOURCES
     "Src/*.cc"
     "Src/misc/*.c"
     "Src/misc/*.cc"
-    "Src/misc/benchmarking/*.c"
-    "Src/misc/benchmarking/*.cc"
     "Src/${TFLM_BOARD}/*.c"
     "Src/${TFLM_BOARD}/*.cc"
     )
