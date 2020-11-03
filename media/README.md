@@ -14,7 +14,7 @@ python3 -m pip install -r requirements.txt
 
 ## Configure CMake
 
-0. Check if your board is compatible. See: [Boards](TODO)
+0. Check if your board is compatible. See `CMakeLists.txt`!
 
 1. Edit `CMakeLists.txt` an make sure, that the `FAKE_TOUCH` option is enabled
 
