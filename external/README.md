@@ -7,7 +7,7 @@ Do use the external projects make sure to run `git submodule update --init --rec
 
 ## TFLite Mirco Compiler
 
-Set `SET(ENABLE_TFLM_COMPILER ON)` after `FIND_PACKAGE(TFLite REQUIRED)` to
+Set `SET(ENABLE_TFLM_COMPILER ON)` after `FIND_PACKAGE(TFLite REQUIRED)` to enable the feature in the `CMakeLists.txt`.
 
 If providing `TF_SRC` manually, also make sure to run `tensorflow/lite/tools/make/download_dependencies.sh` before trying to use the custom target `make convert`.
 
